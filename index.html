@@ -101,7 +101,7 @@
   <script>
     // Edit this object to personalize all invitation text, dates, names, times, contacts, and links.
     const invitationConfig = {
-      date: "2026-10-21", dateLabel: "2026-10-21", muhurat: "", occasion: "Vastu Havan", eventTitle: "Griha Pravesh / House Warming",
+      date: "2026-10-21", dateLabel: "2026-10-21", muhurat: "", occasion: "Vastu Havan", occasionExtra: "", eventTitle: "Griha Pravesh / House Warming",
       address: ["A 1302, Pramukh Pearl", "Opp. Pramukh Artista", "Vihana Nirvana Road", "Gandhinagar"],
       googleMapsUrl: "https://www.google.com/maps/dir//%E0%A4%AA%E0%A5%8D%E0%A4%B0%E0%A4%AE%E0%A5%81%E0%A4%96+pearl,+Gandhinagar,+Gujarat+382419/@23.0695871,72.5323136,3205m/data=!3m1!1e3!4m8!4m7!1m0!1m5!1m1!1s0x395c29f6f215485d:0x3ae4812d3e048fef!2m2!1d72.603281!2d23.1955759?entry=ttu&g_ep=EgoyMDI2MDkzMC4wIKXMDSoASAFQAw%3D%3D",
       hostNames: ["Ghanshyambhai Prabhudas Navadiya"], familyName: "Navadiya Parivar", familyMembers: [["Shaileshbhai Navadiya", "Sandipbhai Navadiya"], ["Nikhil Navadiya", "Manan Navadiya"]], contact: {name:"Nikhil Navadiya",phone:"7276542434"},
@@ -120,11 +120,12 @@
     const $=selector=>document.querySelector(selector), cfg=invitationConfig, language="en";
     const langDate=new Date(`${cfg.date}T12:00:00`);
     const dateDisplay=new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"long",year:"numeric"}).format(langDate);
+    const weekdayDisplay=new Intl.DateTimeFormat("en-GB",{weekday:"long"}).format(langDate);
     const dateMessage=new Intl.DateTimeFormat("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(langDate);
-    $("#dateValue").textContent=dateDisplay;
+    $("#dateValue").innerHTML=`${dateDisplay}<br><span style="font-size:0.85em;">${weekdayDisplay}</span>`;
     $("#muhuratValue").textContent=cfg.muhurat||"—";
     if(!cfg.muhurat) $("#muhuratValue").closest(".fact").hidden=true;
-    $("#occasionValue").textContent=cfg.occasion;
+    $("#occasionValue").innerHTML=cfg.occasionExtra ? `${cfg.occasion}<br>${cfg.occasionExtra}` : cfg.occasion;
     $("#venueValue").innerHTML=cfg.address.map(line=>line.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))).join("<br>");
     $("#mapLink").href=cfg.googleMapsUrl;
     $("#shloka").innerHTML=cfg.shlokas.map(line=>`<div>${line}</div>`).join("");
